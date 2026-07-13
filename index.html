@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC Higher Education Institute</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* Color Variables */
+        :root {
+            --dark-blue: #0d1b4a;
+            --red: #c62828;
+            --gray: #757575;
+            --light-gray: #e0e0e0;
+            --white: #ffffff;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: var(--dark-blue);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar .logo {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .navbar .logo span {
+            color: var(--red);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 15px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            background-color: var(--red);
+            color: var(--white);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 2px;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #1a3a7a 100%);
+            color: var(--white);
+            padding: 100px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(198,40,40,0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--red);
+            color: var(--white);
+            padding: 14px 35px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(198,40,40,0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 70px 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 16px;
+            margin-bottom: 50px;
+        }
+
+        /* Programme Cards */
+        .programmes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .programme-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--dark-blue);
+        }
+
+        .programme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-top-color: var(--red);
+        }
+
+        .programme-card h3 {
+            color: var(--dark-blue);
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .programme-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .programme-card .card-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--dark-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--white);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Schools Section */
+        .schools-section {
+            background-color: var(--white);
+        }
+
+        .schools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .school-card {
+            background: linear-gradient(135deg, var(--dark-blue), #1a3a7a);
+            color: var(--white);
+            padding: 35px 25px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .school-card:hover {
+            transform: scale(1.03);
+        }
+
+        .school-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .school-card p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* Programme Detail Page */
+        .programme-detail-header {
+            background: linear-gradient(135deg, var(--dark-blue), #1a3a7a);
+            color: var(--white);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .programme-detail-header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .programme-detail-header p {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: var(--red);
+            color: var(--white);
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #a51c1c;
+        }
+
+        .detail-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px 40px;
+        }
+
+        .detail-content h2 {
+            color: var(--dark-blue);
+            font-size: 26px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--red);
+            padding-left: 15px;
+        }
+
+        .detail-content h3 {
+            color: var(--dark-blue);
+            font-size: 20px;
+            margin: 30px 0 15px;
+        }
+
+        .detail-content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .detail-content ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .detail-content ul li {
+            padding: 10px 0 10px 30px;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .detail-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        /* Module Table */
+        .module-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .module-table thead {
+            background-color: var(--dark-blue);
+            color: var(--white);
+        }
+
+        .module-table th,
+        .module-table td {
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .module-table tbody tr {
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .module-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .module-table tbody tr:hover {
+            background-color: #e8eaf6;
+        }
+
+        .semester-title {
+            background-color: var(--red);
+            color: var(--white);
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background-color: #e8eaf6;
+            border-left: 4px solid var(--dark-blue);
+            padding: 25px;
+            border-radius: 5px;
+            margin: 30px 0;
+        }
+
+        .info-box h4 {
+            color: var(--dark-blue);
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            margin-bottom: 5px;
+        }
+
+        /* About Page */
+        .about-hero {
+            background: linear-gradient(135deg, var(--dark-blue), #1a3a7a);
+            color: var(--white);
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .about-content p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+        }
+
+        .feature-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--dark-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: var(--white);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Contact Page */
+        .contact-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .contact-info-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--dark-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .contact-info-card h4 {
+            color: var(--dark-blue);
+            margin-bottom: 5px;
+        }
+
+        .contact-info-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .contact-form {
+            background-color: var(--white);
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-form h3 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--dark-blue);
+            font-size: 14px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--dark-blue);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--red);
+            color: var(--white);
+            padding: 14px 35px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #a51c1c;
+            transform: translateY(-2px);
+        }
+
+        /* Programmes Page List */
+        .programmes-list {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .programme-category {
+            margin-bottom: 50px;
+        }
+
+        .programme-category h2 {
+            color: var(--dark-blue);
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--red);
+            display: inline-block;
+        }
+
+        .programme-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .programme-list-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .programme-list-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .programme-list-card .card-header {
+            background: linear-gradient(135deg, var(--dark-blue), #1a3a7a);
+            padding: 25px;
+            color: var(--white);
+        }
+
+        .programme-list-card .card-header h3 {
+            font-size: 17px;
+        }
+
+        .programme-list-card .card-body {
+            padding: 20px 25px;
+        }
+
+        .programme-list-card .card-body p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-link {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .card-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 50px 40px 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--white);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--red);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--red);
+        }
+
+        .footer-col p {
+            color: #b0b0b0;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--red), #e53935);
+            color: var(--white);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--red);
+            padding: 14px 35px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--dark-blue);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .section {
+                padding: 40px 20px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .programme-detail-header h1 {
+                font-size: 26px;
+            }
+
+            .detail-content {
+                padding: 30px 20px;
+            }
+
+            .module-table th,
+            .module-table td {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .about-hero h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="showPage('home')">ABC <span>Higher Education</span></a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="active" onclick="showPage('home')" id="nav-home">Home</a></li>
+            <li><a href="#" onclick="showPage('about')" id="nav-about">About Us</a></li>
+            <li><a href="#" onclick="showPage('programmes')" id="nav-programmes">Programmes</a></li>
+            <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Empowering Futures Through Information and Communication Technology</h1>
+            <p>ABC Higher Education Institute offers world-class UK qualifications in Sri Lanka. Discover our HND programmes in IT and Business Management, and BSc in IT.</p>
+            <a href="#" class="hero-btn" onclick="showPage('programmes')">Explore Programmes</a>
+        </section>
+
+        <!-- Academic Programmes -->
+        <section class="section">
+            <h2 class="section-title">Academic Programmes</h2>
+            <p class="section-subtitle">Choose a course that will take you to your dream</p>
+            <div class="programmes-grid">
+                <div class="programme-card">
+                    <div class="card-icon">IT</div>
+                    <h3>HND in Computing (Software Engineering)</h3>
+                    <p>Develop cutting-edge software solutions and master modern development methodologies.</p>
+                </div>
+                <div class="programme-card">
+                    <div class="card-icon">IT</div>
+                    <h3>HND in Computing (Network Engineering)</h3>
+                    <p>Build and manage robust network infrastructures for organizations of all sizes.</p>
+                </div>
+                <div class="programme-card">
+                    <div class="card-icon">IT</div>
+                    <h3>HND in Computing (Cyber Security)</h3>
+                    <p>Protect digital assets and master ethical hacking, threat defense, and security protocols.</p>
+                </div>
+                <div class="programme-card">
+                    <div class="card-icon">B</div>
+                    <h3>HND in Business (Management)</h3>
+                    <p>Lead teams, make strategic decisions, and drive business success in any industry.</p>
+                </div>
+                <div class="programme-card">
+                    <div class="card-icon">B</div>
+                    <h3>HND in Business (Accounting and Finance)</h3>
+                    <p>Master financial management, budgeting, and business analytics for corporate success.</p>
+                </div>
+                <div class="programme-card">
+                    <div class="card-icon">B</div>
+                    <h3>HND in Business (Entrepreneurship & Small Businesses)</h3>
+                    <p>Launch and grow your own business with practical entrepreneurial skills.</p>
+                </div>
+                <div class="programme-card">
+                    <div class="card-icon">FD</div>
+                    <h3>Foundation Diploma in Information Technology</h3>
+                    <p>Build a strong foundation in IT fundamentals before advancing to HND level.</p>
+                </div>
+                <div class="programme-card">
+                    <div class="card-icon">FD</div>
+                    <h3>Foundation Diploma in Business</h3>
+                    <p>Prepare for business studies with essential concepts and practical skills.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schools Section -->
+        <section class="section schools-section">
+            <h2 class="section-title">Subjects To Choose From</h2>
+            <p class="section-subtitle">Discover a variety of subjects tailored to your interests and ambitions</p>
+            <div class="schools-grid">
+                <div class="school-card">
+                    <h3>School of Computing</h3>
+                    <p>Software Engineering, Network Engineering, Cyber Security and more</p>
+                </div>
+                <div class="school-card">
+                    <h3>School of Business</h3>
+                    <p>Management, Accounting & Finance, Entrepreneurship and more</p>
+                </div>
+                <div class="school-card">
+                    <h3>Digital Technology</h3>
+                    <p>Digital Technology and Applied Productivity programmes</p>
+                </div>
+                <div class="school-card">
+                    <h3>Foundation Programmes</h3>
+                    <p>Foundation Diplomas in IT and Business to prepare for HND studies</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2>Interested? Let's Talk!</h2>
+            <p>Reach out to us so that we can help you with the right information.</p>
+            <a href="#" class="cta-btn" onclick="showPage('contact')">Contact Us</a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Sunday<br>9:00am - 5:00pm</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>
+                        24/1 Dudley Senanayake Mawatha, Colombo 08<br><br>
+                        Email: info@abchei.edu.lk<br>
+                        Phone: 0707855555
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ABC Higher Education Institute. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- PROGRAMMES PAGE -->
+    <div class="page" id="page-programmes">
+        <section class="programme-detail-header">
+            <h1>Academic Programmes</h1>
+            <p>Choose a course that will take you to your dream career</p>
+        </section>
+
+        <section class="section">
+            <div class="programmes-list">
+                <!-- IT Programmes -->
+                <div class="programme-category">
+                    <h2>Information Technology Programmes</h2>
+                    <div class="programme-list-grid">
+                        <div class="programme-list-card" onclick="showPage('it-programme')">
+                            <div class="card-header">
+                                <h3>HND in Computing (Software Engineering)</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Master modern software development methodologies, programming languages, and build enterprise-level applications.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="programme-list-card" onclick="showPage('it-programme')">
+                            <div class="card-header">
+                                <h3>HND in Computing (Network Engineering)</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Design, implement and manage complex network infrastructures for organizations of all sizes.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="programme-list-card" onclick="showPage('it-programme')">
+                            <div class="card-header">
+                                <h3>HND in Computing (Cyber Security)</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Protect digital assets, master ethical hacking, threat defense, and industry-standard security tools.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="programme-list-card">
+                            <div class="card-header">
+                                <h3>BSc in Information Technology</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>A comprehensive degree programme covering advanced IT concepts, research, and professional practice.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="programme-list-card">
+                            <div class="card-header">
+                                <h3>Foundation Diploma in IT</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Build a strong foundation in IT fundamentals before advancing to HND level studies.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Programmes -->
+                <div class="programme-category">
+                    <h2>Business Programmes</h2>
+                    <div class="programme-list-grid">
+                        <div class="programme-list-card" onclick="showPage('business-programme')">
+                            <div class="card-header">
+                                <h3>HND in Business (Management)</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Lead teams, make strategic decisions, and drive business success in any industry worldwide.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="programme-list-card" onclick="showPage('business-programme')">
+                            <div class="card-header">
+                                <h3>HND in Business (Accounting and Finance)</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Master financial management, budgeting, accounting principles, and business analytics.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="programme-list-card" onclick="showPage('business-programme')">
+                            <div class="card-header">
+                                <h3>HND in Business (Entrepreneurship & Small Businesses)</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Launch and grow your own business with practical entrepreneurial skills and knowledge.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                        <div class="programme-list-card">
+                            <div class="card-header">
+                                <h3>Foundation Diploma in Business</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Prepare for business studies with essential concepts, theories and practical skills.</p>
+                                <span class="card-link">View Details →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Sunday<br>9:00am - 5:00pm</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>
+                        24/1 Dudley Senanayake Mawatha, Colombo 08<br><br>
+                        Email: info@abchei.edu.lk<br>
+                        Phone: 0707855555
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ABC Higher Education Institute. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- IT PROGRAMME PAGE -->
+    <div class="page" id="page-it-programme">
+        <section class="programme-detail-header">
+            <button class="back-btn" onclick="showPage('programmes')">← Back to Programmes</button>
+            <h1>HND in Computing (Cyber Security)</h1>
+            <p>Secure the Digital Future — From Ethical Hacking to AI-Powered Defense, You'll Protect the Digital Economy.</p>
+        </section>
+
+        <div class="detail-content">
+            <h2>Overview of the Course</h2>
+            <p>From protecting global businesses against cyberattacks to securing sensitive cloud data, cybersecurity professionals are in high demand. With our HND in Cybersecurity, you can be the expert behind these critical defenses!</p>
+
+            <h3>Build the Future — Secure the Digital World</h3>
+            <p>From Ethical Hacking to AI-Powered Defense, You'll Protect the Digital Economy.</p>
+
+            <h3>What You'll Learn:</h3>
+            <ul>
+                <li><strong>Ethical Hacking & Threat Defense</strong> — Learn to identify and neutralize cyber threats like those faced by Sony and Equifax.</li>
+                <li><strong>Network Security & Encryption</strong> — Gain hands-on experience with firewalls and encryption, just as banks and healthcare systems do to protect sensitive data.</li>
+                <li><strong>Cloud Security & AI-Driven Defense</strong> — Master security techniques used by tech giants like Google and Amazon to safeguard their infrastructure.</li>
+                <li><strong>Industry-Standard Tools</strong> — Train with Kali Linux, AWS, Cisco, and more to prepare for real-world cybersecurity challenges.</li>
+            </ul>
+
+            <h3>Why Choose Cybersecurity?</h3>
+            <ul>
+                <li><strong>Be the Protector of the Digital World</strong> — Secure networks, data, and digital assets from ever-evolving threats.</li>
+                <li><strong>Unlock High-Paying Job Opportunities</strong> — Cybersecurity professionals earn $90,000+ globally, with demand growing rapidly.</li>
+                <li><strong>Master AI-Powered Defense Systems</strong> — Learn penetration testing, incident response, and threat intelligence to stay ahead of cybercriminals.</li>
+                <li><strong>Work Across Multiple Sectors</strong> — From Google & Microsoft to healthcare, finance, and government, cybersecurity experts are needed everywhere.</li>
+            </ul>
+
+            <h3>Why Choose Us?</h3>
+            <ul>
+                <li>Globally Recognized Cybersecurity Certification</li>
+                <li>Hands-on practical training with industry tools</li>
+                <li>Experienced faculty with real-world expertise</li>
+                <li>Pathway to top international universities</li>
+            </ul>
+
+            <h2>Module Overview</h2>
+
+            <div class="semester-title">Semester 1 & 2</div>
+            <table class="module-table">
+                <thead>
+                    <tr>
+                        <th>Module Code</th>
+                        <th>Module Name</th>
+                        <th>Credits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Programming</td><td>15</td></tr>
+                    <tr><td>2</td><td>Networking</td><td>15</td></tr>
+                    <tr><td>3</td><td>Professional Practice</td><td>15</td></tr>
+                    <tr><td>4</td><td>Database Design & Development</td><td>15</td></tr>
+                    <tr><td>5</td><td>Security</td><td>15</td></tr>
+                    <tr><td>6</td><td>Planning a Computing Project</td><td>15</td></tr>
+                    <tr><td>7</td><td>Software Development Lifecycles</td><td>15</td></tr>
+                    <tr><td>13</td><td>Website Design & Development</td><td>15</td></tr>
+                </tbody>
+            </table>
+
+            <div class="semester-title">Semester 3 & 4</div>
+            <table class="module-table">
+                <thead>
+                    <tr>
+                        <th>Module Code</th>
+                        <th>Module Name</th>
+                        <th>Credits</th>
+                        <th>Assessment Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>16</td><td>Computing Research Project</td><td>15</td><td>Set Assignment</td></tr>
+                    <tr><td>17</td><td>Business Process Support</td><td>15</td><td>Set Assignment</td></tr>
+                    <tr><td>30</td><td>Applied Cryptography in the Cloud</td><td>15</td><td>Set Assignment</td></tr>
+                    <tr><td>31</td><td>Forensics</td><td>15</td><td>Set Assignment</td></tr>
+                    <tr><td>32</td><td>Information Security Management</td><td>15</td><td>Set Assignment</td></tr>
+                    <tr><td>45</td><td>Internet of Things</td><td>15</td><td>Set Assignment</td></tr>
+                    <tr><td>47</td><td>Emerging Technologies</td><td>15</td><td>Set Assignment</td></tr>
+                </tbody>
+            </table>
+
+            <p><strong>Total Credits: 240</strong></p>
+
+            <div class="info-box">
+                <h4>Programme Details</h4>
+                <p><strong>Tuition Fees:</strong> Contact us for more information (0707855555)</p>
+                <p><strong>Intake:</strong> February-March | June-July | September-October</p>
+                <p><strong>Delivery Mode:</strong> Full Time - 18 Months | Part Time - 24 Months</p>
+                <p><strong>Venue:</strong> 24/1 Dudley Senanayake Mawatha, Colombo 08</p>
+            </div>
+
+            <section class="cta-section" style="border-radius: 10px; margin-top: 30px;">
+                <h2>Visit Our Campus & Experience the Future of Tech in Action!</h2>
+                <p>Come and see our state-of-the-art facilities and meet our faculty.</p>
+                <a href="#" class="cta-btn" onclick="showPage('contact')">Contact Us</a>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Sunday<br>9:00am - 5:00pm</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>
+                        24/1 Dudley Senanayake Mawatha, Colombo 08<br><br>
+                        Email: info@abchei.edu.lk<br>
+                        Phone: 0707855555
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ABC Higher Education Institute. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- BUSINESS PROGRAMME PAGE -->
+    <div class="page" id="page-business-programme">
+        <section class="programme-detail-header">
+            <button class="back-btn" onclick="showPage('programmes')">← Back to Programmes</button>
+            <h1>HND in Business (Management)</h1>
+            <p>Lead, Innovate & Succeed! — From Leadership to Strategy, You'll Power the Business World.</p>
+        </section>
+
+        <div class="detail-content">
+            <h2>Overview of the Course</h2>
+            <p>Ready to take your business career to the next level? Our HND in Business Management equips you with the skills to lead teams, make strategic decisions, and drive business success in any industry. Whether you aspire to be a manager, entrepreneur, or corporate leader, this program provides the foundation for a thriving career!</p>
+
+            <h3>Build the Future — Lead, Innovate & Succeed!</h3>
+            <p>From Leadership to Strategy, You'll Power the Business World.</p>
+
+            <h3>What You'll Learn:</h3>
+            <ul>
+                <li><strong>Leadership & Management</strong> — Develop the skills to manage teams and businesses effectively.</li>
+                <li><strong>Strategic Business Planning</strong> — Learn how to create and implement successful business strategies.</li>
+                <li><strong>Marketing & Branding</strong> — Master modern marketing techniques to promote businesses.</li>
+                <li><strong>Finance & Business Operations</strong> — Gain insights into financial management, budgeting, and business analytics.</li>
+            </ul>
+
+            <h3>Why Choose Business Management?</h3>
+            <ul>
+                <li><strong>High-Demand Skills</strong> — Management professionals are needed in every industry.</li>
+                <li><strong>Unlock Global Career Opportunities</strong> — Work in corporate, government, or entrepreneurial roles.</li>
+                <li><strong>Pathway to a Degree</strong> — Progress to a Bachelor's in Business Administration (BBA).</li>
+                <li><strong>Hands-On Learning</strong> — Apply theories through case studies, simulations, and real-world projects.</li>
+            </ul>
+
+            <h3>Why Choose Us?</h3>
+            <ul>
+                <li>Globally Recognized & Accredited Program</li>
+                <li>Industry-experienced faculty members</li>
+                <li>Strong industry connections and internship opportunities</li>
+                <li>Pathway to top international universities</li>
+            </ul>
+
+            <h2>Module Overview</h2>
+
+            <div class="semester-title">Semester 1 & 2</div>
+            <table class="module-table">
+                <thead>
+                    <tr>
+                        <th>Module Code</th>
+                        <th>Module Name</th>
+                        <th>Credits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>The Contemporary Business Environment</td><td>15</td></tr>
+                    <tr><td>2</td><td>Marketing Processes and Planning</td><td>15</td></tr>
+                    <tr><td>3</td><td>Management of Human Resources</td><td>15</td></tr>
+                    <tr><td>4</td><td>Leadership and Management</td><td>15</td></tr>
+                </tbody>
+            </table>
+
+            <div class="semester-title">Semester 3 & 4</div>
+            <table class="module-table">
+                <thead>
+                    <tr>
+                        <th>Module Code</th>
+                        <th>Module Name</th>
+                        <th>Credits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>5</td><td>Accounting Principles</td><td>15</td></tr>
+                    <tr><td>6</td><td>Managing a Successful Business Project</td><td>15</td></tr>
+                    <tr><td>7</td><td>Business Law</td><td>15</td></tr>
+                    <tr><td>8</td><td>Managing Customer Experience</td><td>15</td></tr>
+                    <tr><td>9</td><td>Research Project</td><td>15</td></tr>
+                    <tr><td>10</td><td>Organizational Behavior Management</td><td>15</td></tr>
+                    <tr><td>11</td><td>Managing and Leading Change</td><td>15</td></tr>
+                    <tr><td>12</td><td>Global Business Environment</td><td>15</td></tr>
+                    <tr><td>13</td><td>Principles of Operations Management</td><td>15</td></tr>
+                    <tr><td>14</td><td>International Marketing</td><td>15</td></tr>
+                    <tr><td>15</td><td>Sales Management</td><td>15</td></tr>
+                </tbody>
+            </table>
+
+            <p><strong>Total Credits: 240</strong></p>
+
+            <div class="info-box">
+                <h4>Programme Details</h4>
+                <p><strong>Tuition Fees:</strong> Contact us for more information (0707855555)</p>
+                <p><strong>Intake:</strong> February-March | June-July | September-October</p>
+                <p><strong>Delivery Mode:</strong> Full Time - 18 Months | Part Time - 24 Months</p>
+                <p><strong>Venue:</strong> 24/1 Dudley Senanayake Mawatha, Colombo 08</p>
+            </div>
+
+            <section class="cta-section" style="border-radius: 10px; margin-top: 30px;">
+                <h2>Visit Our Campus & Experience the Future of Business in Action!</h2>
+                <p>Come and see our state-of-the-art facilities and meet our faculty.</p>
+                <a href="#" class="cta-btn" onclick="showPage('contact')">Contact Us</a>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Sunday<br>9:00am - 5:00pm</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>
+                        24/1 Dudley Senanayake Mawatha, Colombo 08<br><br>
+                        Email: info@abchei.edu.lk<br>
+                        Phone: 0707855555
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ABC Higher Education Institute. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ABOUT US PAGE -->
+    <div class="page" id="page-about">
+        <section class="about-hero">
+            <h1>About Us</h1>
+            <p>Welcome to ABC Higher Education Institute — A premier institution bringing world-class UK qualifications to Sri Lanka.</p>
+        </section>
+
+        <div class="about-content">
+            <h2 style="color: var(--dark-blue); font-size: 28px; margin-bottom: 20px; border-left: 4px solid var(--red); padding-left: 15px;">Welcome to ABC Higher Education Institute</h2>
+            <p>Welcome to ABC Higher Education Institute, located in Colombo, a premier higher education institution committed to fostering academic excellence, industry-ready skills, and global perspectives. We bring world-class UK qualifications to Sri Lanka, making quality international education accessible to local students.</p>
+            <p>With world-class facilities, internationally recognized programmes, and a vibrant multicultural community, we prepare students to thrive in a competitive world and empower them to launch careers or ventures locally or globally.</p>
+            <p>Our HND Computing and Business programmes provide direct pathways to top international universities, making quality UK education accessible to Sri Lankan students. We also offer a BSc programme in Information Technology for those seeking a full degree qualification.</p>
+
+            <h2 style="color: var(--dark-blue); font-size: 28px; margin: 40px 0 20px; border-left: 4px solid var(--red); padding-left: 15px;">Why Choose ABC Higher Education Institute?</h2>
+            <p>Discover the advantages of studying world-class qualifications in Sri Lanka.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Entrepreneur-Focused Programs</h3>
+                    <p>Programs designed to build business acumen and tech innovation skills for the modern workplace.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Internationally Aligned Qualifications</h3>
+                    <p>Globally recognized programmes that meet international standards and open doors worldwide.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Strong Network</h3>
+                    <p>Progress to international bachelor's degrees without leaving Sri Lanka through our university partnerships.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Years of Expertise</h3>
+                    <p>Backed by experienced educators and industry professionals dedicated to student success.</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 50px;">
+                <h4>Our Programmes</h4>
+                <p>• HND in Computing (Software Engineering, Network Engineering, Cyber Security)</p>
+                <p>• HND in Business (Management, Accounting & Finance, Entrepreneurship)</p>
+                <p>• BSc in Information Technology</p>
+                <p>• Foundation Diplomas in IT and Business</p>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2>Interested? Let's Talk!</h2>
+            <p>Reach out to us so that we can help you with the right information.</p>
+            <a href="#" class="cta-btn" onclick="showPage('contact')">Let's Talk</a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Sunday<br>9:00am - 5:00pm</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>
+                        24/1 Dudley Senanayake Mawatha, Colombo 08<br><br>
+                        Email: info@abchei.edu.lk<br>
+                        Phone: 0707855555
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ABC Higher Education Institute. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- CONTACT US PAGE -->
+    <div class="page" id="page-contact">
+        <section class="programme-detail-header">
+            <h1>Contact Us</h1>
+            <p>ABC Higher Education Institute is passionate about empowering students</p>
+        </section>
+
+        <section class="contact-section">
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div>
+                    <h2 style="color: var(--dark-blue); margin-bottom: 25px; font-size: 24px;">Get In Touch</h2>
+                    <div class="contact-info-card">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>24/1 Dudley Senanayake Mawatha, Colombo 08</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-icon">✉</div>
+                        <div>
+                            <h4>Email Address</h4>
+                            <p>info@abchei.edu.lk</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <h4>Phone Number</h4>
+                            <p>0707855555</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="contact-icon">🕐</div>
+                        <div>
+                            <h4>Opening Hours</h4>
+                            <p>Monday - Sunday: 9:00am - 5:00pm</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h3>Interested? Let's Talk!</h3>
+                    <p style="color: var(--gray); margin-bottom: 20px; font-size: 14px;">Reach out to us so that we can help you with the right information.</p>
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" placeholder="+94" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="Enter your subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('programmes')">Programmes</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <p>Monday - Sunday<br>9:00am - 5:00pm</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>
+                        24/1 Dudley Senanayake Mawatha, Colombo 08<br><br>
+                        Email: info@abchei.edu.lk<br>
+                        Phone: 0707855555
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ABC Higher Education Institute. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            var pages = document.querySelectorAll('.page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+
+            // Show selected page
+            document.getElementById('page-' + pageId).classList.add('active');
+
+            // Update nav links
+            var navLinks = document.querySelectorAll('.nav-links li a');
+            for (var j = 0; j < navLinks.length; j++) {
+                navLinks[j].classList.remove('active');
+            }
+
+            var navMap = {
+                'home': 'nav-home',
+                'about': 'nav-about',
+                'programmes': 'nav-programmes',
+                'contact': 'nav-contact',
+                'it-programme': 'nav-programmes',
+                'business-programme': 'nav-programmes'
+            };
+
+            if (navMap[pageId]) {
+                document.getElementById(navMap[pageId]).classList.add('active');
+            }
+
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('show');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
